@@ -1,0 +1,3 @@
+[submodule "hoarder"]
+	path = hoarder
+	url = https://github.com/hoarder-app/hoarder
