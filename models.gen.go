@@ -83,11 +83,6 @@ const (
 	PostBookmarksJSONBody2TypeAsset PostBookmarksJSONBody2Type = "asset"
 )
 
-// Defines values for PostBookmarksJSONBody3Type.
-const (
-	Unknown PostBookmarksJSONBody3Type = "unknown"
-)
-
 // Bookmark defines model for Bookmark.
 type Bookmark struct {
 	Archived bool `json:"archived"`
@@ -223,23 +218,19 @@ type GetBookmarksParams struct {
 
 // PostBookmarksJSONBody defines parameters for PostBookmarks.
 type PostBookmarksJSONBody struct {
-	union json.RawMessage
+	Archived   *bool   `json:"archived,omitempty"`
+	CreatedAt  *string `json:"createdAt,omitempty"`
+	Favourited *bool   `json:"favourited,omitempty"`
+	Note       *string `json:"note,omitempty"`
+	Summary    *string `json:"summary,omitempty"`
+	Title      *string `json:"title"`
+	union      json.RawMessage
 }
 
 // PostBookmarksJSONBody0 defines parameters for PostBookmarks.
 type PostBookmarksJSONBody0 struct {
-	CrawledAt              *string                    `json:"crawledAt"`
-	Description            *string                    `json:"description"`
-	Favicon                *string                    `json:"favicon"`
-	FullPageArchiveAssetId *string                    `json:"fullPageArchiveAssetId"`
-	HtmlContent            *string                    `json:"htmlContent"`
-	ImageAssetId           *string                    `json:"imageAssetId"`
-	ImageUrl               *string                    `json:"imageUrl"`
-	ScreenshotAssetId      *string                    `json:"screenshotAssetId"`
-	Title                  *string                    `json:"title"`
-	Type                   PostBookmarksJSONBody0Type `json:"type"`
-	Url                    string                     `json:"url"`
-	VideoAssetId           *string                    `json:"videoAssetId"`
+	Type PostBookmarksJSONBody0Type `json:"type"`
+	Url  string                     `json:"url"`
 }
 
 // PostBookmarksJSONBody0Type defines parameters for PostBookmarks.
@@ -247,7 +238,7 @@ type PostBookmarksJSONBody0Type string
 
 // PostBookmarksJSONBody1 defines parameters for PostBookmarks.
 type PostBookmarksJSONBody1 struct {
-	SourceUrl *string                    `json:"sourceUrl"`
+	SourceUrl *string                    `json:"sourceUrl,omitempty"`
 	Text      string                     `json:"text"`
 	Type      PostBookmarksJSONBody1Type `json:"type"`
 }
@@ -259,8 +250,8 @@ type PostBookmarksJSONBody1Type string
 type PostBookmarksJSONBody2 struct {
 	AssetId   string                          `json:"assetId"`
 	AssetType PostBookmarksJSONBody2AssetType `json:"assetType"`
-	FileName  *string                         `json:"fileName"`
-	SourceUrl *string                         `json:"sourceUrl"`
+	FileName  *string                         `json:"fileName,omitempty"`
+	SourceUrl *string                         `json:"sourceUrl,omitempty"`
 	Type      PostBookmarksJSONBody2Type      `json:"type"`
 }
 
@@ -269,14 +260,6 @@ type PostBookmarksJSONBody2AssetType string
 
 // PostBookmarksJSONBody2Type defines parameters for PostBookmarks.
 type PostBookmarksJSONBody2Type string
-
-// PostBookmarksJSONBody3 defines parameters for PostBookmarks.
-type PostBookmarksJSONBody3 struct {
-	Type PostBookmarksJSONBody3Type `json:"type"`
-}
-
-// PostBookmarksJSONBody3Type defines parameters for PostBookmarks.
-type PostBookmarksJSONBody3Type string
 
 // PatchBookmarksBookmarkIdJSONBody defines parameters for PatchBookmarksBookmarkId.
 type PatchBookmarksBookmarkIdJSONBody struct {
