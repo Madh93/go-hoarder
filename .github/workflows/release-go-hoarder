@@ -1,0 +1,36 @@
+name: Release Go Hoarder
+
+on:
+  pull_request:
+    types: 
+      - closed
+    branches:
+      - main
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get current release version
+        run: echo "CURRENT_VERSION=$(grep 'HOARDER_VERSION:' Taskfile.yml | cut -d ' ' -f4)" >> $GITHUB_ENV
+
+      - name: Get latest release from the repository
+        run: echo "LATEST_RELEASE=$(gh release view --json tagName -q '.tagName')" >> $GITHUB_ENV
+
+      - name: Relase Go Hoarder
+        if: env.CURRENT_VERSION != env.LATEST_RELEASE
+        env:
+          GH_TOKEN: ${{ github.token }}        
+        run: |
+          echo "Creating a new tag: $CURRENT_VERSION"
+          git tag "$CURRENT_VERSION"
+          git push origin "$CURRENT_VERSION"
+
+          # Create a GitHub release using GitHub CLI
+          gh release create "$CURRENT_VERSION" --generate-notes
+
+          echo "Go Hoarder released successfully!"

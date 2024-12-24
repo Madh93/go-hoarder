@@ -13,7 +13,7 @@ The `go-hoarder` client is auto-generated using the
 ## Requirements
 
 - [Go 1.22](https://golang.org/dl/) or higher.
-- A valid API key from [Hoarder](https://docs.hoarder.app/v0.19.0/screenshots#settings).
+- A valid API key from [Hoarder](https://docs.hoarder.app/screenshots#settings).
 
 ## Installation
 
