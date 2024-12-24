@@ -1,7 +1,6 @@
 name: Check the latest Hoarder release
 
 on:
-  workflow_dispatch: # Manually trigger the workflow
   schedule:
     - cron: '15 */8 * * *'  # Run every 8 hours at 15 minutes past the hour
 
@@ -75,6 +74,6 @@ jobs:
           git push origin update-to-${{ env.LATEST_VERSION }}
 
           echo "--- Create Pull Request ---"
-          gh pr create --title "Update to ${{ env.LATEST_VERSION }}" --body "[Hoarder ${{ env.LATEST_VERSION }}](https://github.com/hoarder-app/hoarder/releases/tag/${{ env.LATEST_VERSION }}) has been released. Please review and merge this PR 🙏"
+          gh pr create --title "Update to ${{ env.LATEST_VERSION }}" --body "[Hoarder ${{ env.LATEST_VERSION }}](https://github.com/hoarder-app/hoarder/releases/tag/${{ env.LATEST_VERSION }}) has been released. Please review and merge this PR 🙏" --assignee "Madh93"
           
           echo "Pull Request created successfully!"

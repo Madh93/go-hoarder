@@ -2,10 +2,8 @@ name: Release Go Hoarder
 
 on:
   pull_request:
-    types: 
-      - closed
-    branches:
-      - main
+    types: [closed]
+    branches: [main]
 
 jobs:
   release:
@@ -26,11 +24,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}        
         run: |
-          echo "Creating a new tag: $CURRENT_VERSION"
+          echo "--- Create tag ---"
           git tag "$CURRENT_VERSION"
           git push origin "$CURRENT_VERSION"
 
-          # Create a GitHub release using GitHub CLI
+          echo "--- Create GitHub release ---"
           gh release create "$CURRENT_VERSION" --generate-notes
 
           echo "Go Hoarder released successfully!"
