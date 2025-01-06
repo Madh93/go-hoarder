@@ -62,6 +62,20 @@ const (
 	Human BookmarkTagsAttachedBy = "human"
 )
 
+// Defines values for HighlightColor.
+const (
+	HighlightColorBlue   HighlightColor = "blue"
+	HighlightColorGreen  HighlightColor = "green"
+	HighlightColorRed    HighlightColor = "red"
+	HighlightColorYellow HighlightColor = "yellow"
+)
+
+// Defines values for ListType.
+const (
+	ListTypeManual ListType = "manual"
+	ListTypeSmart  ListType = "smart"
+)
+
 // Defines values for PostBookmarksJSONBody0Type.
 const (
 	PostBookmarksJSONBody0TypeLink PostBookmarksJSONBody0Type = "link"
@@ -82,6 +96,41 @@ const (
 const (
 	PostBookmarksJSONBody2TypeAsset PostBookmarksJSONBody2Type = "asset"
 )
+
+// Defines values for PostBookmarksBookmarkIdAssetsJSONBodyAssetType.
+const (
+	BannerImage     PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "bannerImage"
+	BookmarkAsset   PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "bookmarkAsset"
+	FullPageArchive PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "fullPageArchive"
+	Screenshot      PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "screenshot"
+	Unknown         PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "unknown"
+	Video           PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "video"
+)
+
+// Defines values for PostHighlightsJSONBodyColor.
+const (
+	PostHighlightsJSONBodyColorBlue   PostHighlightsJSONBodyColor = "blue"
+	PostHighlightsJSONBodyColorGreen  PostHighlightsJSONBodyColor = "green"
+	PostHighlightsJSONBodyColorRed    PostHighlightsJSONBodyColor = "red"
+	PostHighlightsJSONBodyColorYellow PostHighlightsJSONBodyColor = "yellow"
+)
+
+// Defines values for PatchHighlightsHighlightIdJSONBodyColor.
+const (
+	Blue   PatchHighlightsHighlightIdJSONBodyColor = "blue"
+	Green  PatchHighlightsHighlightIdJSONBodyColor = "green"
+	Red    PatchHighlightsHighlightIdJSONBodyColor = "red"
+	Yellow PatchHighlightsHighlightIdJSONBodyColor = "yellow"
+)
+
+// Defines values for PostListsJSONBodyType.
+const (
+	PostListsJSONBodyTypeManual PostListsJSONBodyType = "manual"
+	PostListsJSONBodyTypeSmart  PostListsJSONBodyType = "smart"
+)
+
+// AssetId defines model for AssetId.
+type AssetId = string
 
 // Bookmark defines model for Bookmark.
 type Bookmark struct {
@@ -177,13 +226,37 @@ type BookmarkId = string
 // Cursor defines model for Cursor.
 type Cursor = string
 
+// Highlight defines model for Highlight.
+type Highlight struct {
+	BookmarkId  string          `json:"bookmarkId"`
+	Color       *HighlightColor `json:"color,omitempty"`
+	CreatedAt   string          `json:"createdAt"`
+	EndOffset   float32         `json:"endOffset"`
+	Id          string          `json:"id"`
+	Note        *string         `json:"note"`
+	StartOffset float32         `json:"startOffset"`
+	Text        *string         `json:"text"`
+	UserId      string          `json:"userId"`
+}
+
+// HighlightColor defines model for Highlight.Color.
+type HighlightColor string
+
+// HighlightId defines model for HighlightId.
+type HighlightId = string
+
 // List defines model for List.
 type List struct {
-	Icon     string  `json:"icon"`
-	Id       string  `json:"id"`
-	Name     string  `json:"name"`
-	ParentId *string `json:"parentId"`
+	Icon     string    `json:"icon"`
+	Id       string    `json:"id"`
+	Name     string    `json:"name"`
+	ParentId *string   `json:"parentId"`
+	Query    *string   `json:"query"`
+	Type     *ListType `json:"type,omitempty"`
 }
+
+// ListType defines model for List.Type.
+type ListType string
 
 // ListId defines model for ListId.
 type ListId = string
@@ -192,6 +265,12 @@ type ListId = string
 type PaginatedBookmarks struct {
 	Bookmarks  []Bookmark `json:"bookmarks"`
 	NextCursor *string    `json:"nextCursor"`
+}
+
+// PaginatedHighlights defines model for PaginatedHighlights.
+type PaginatedHighlights struct {
+	Highlights []Highlight `json:"highlights"`
+	NextCursor *string     `json:"nextCursor"`
 }
 
 // Tag defines model for Tag.
@@ -219,7 +298,7 @@ type GetBookmarksParams struct {
 // PostBookmarksJSONBody defines parameters for PostBookmarks.
 type PostBookmarksJSONBody struct {
 	Archived   *bool   `json:"archived,omitempty"`
-	CreatedAt  *string `json:"createdAt,omitempty"`
+	CreatedAt  *string `json:"createdAt"`
 	Favourited *bool   `json:"favourited,omitempty"`
 	Note       *string `json:"note,omitempty"`
 	Summary    *string `json:"summary,omitempty"`
@@ -261,14 +340,35 @@ type PostBookmarksJSONBody2AssetType string
 // PostBookmarksJSONBody2Type defines parameters for PostBookmarks.
 type PostBookmarksJSONBody2Type string
 
+// GetBookmarksSearchParams defines parameters for GetBookmarksSearch.
+type GetBookmarksSearchParams struct {
+	Q      string   `form:"q" json:"q"`
+	Limit  *float32 `form:"limit,omitempty" json:"limit,omitempty"`
+	Cursor *Cursor  `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
 // PatchBookmarksBookmarkIdJSONBody defines parameters for PatchBookmarksBookmarkId.
 type PatchBookmarksBookmarkIdJSONBody struct {
 	Archived   *bool   `json:"archived,omitempty"`
-	CreatedAt  *string `json:"createdAt,omitempty"`
+	CreatedAt  *string `json:"createdAt"`
 	Favourited *bool   `json:"favourited,omitempty"`
 	Note       *string `json:"note,omitempty"`
 	Summary    *string `json:"summary"`
 	Title      *string `json:"title"`
+}
+
+// PostBookmarksBookmarkIdAssetsJSONBody defines parameters for PostBookmarksBookmarkIdAssets.
+type PostBookmarksBookmarkIdAssetsJSONBody struct {
+	AssetType PostBookmarksBookmarkIdAssetsJSONBodyAssetType `json:"assetType"`
+	Id        string                                         `json:"id"`
+}
+
+// PostBookmarksBookmarkIdAssetsJSONBodyAssetType defines parameters for PostBookmarksBookmarkIdAssets.
+type PostBookmarksBookmarkIdAssetsJSONBodyAssetType string
+
+// PutBookmarksBookmarkIdAssetsAssetIdJSONBody defines parameters for PutBookmarksBookmarkIdAssetsAssetId.
+type PutBookmarksBookmarkIdAssetsAssetIdJSONBody struct {
+	AssetId string `json:"assetId"`
 }
 
 // DeleteBookmarksBookmarkIdTagsJSONBody defines parameters for DeleteBookmarksBookmarkIdTags.
@@ -287,18 +387,51 @@ type PostBookmarksBookmarkIdTagsJSONBody struct {
 	} `json:"tags"`
 }
 
-// PatchListListIdJSONBody defines parameters for PatchListListId.
-type PatchListListIdJSONBody struct {
-	Icon     *string `json:"icon,omitempty"`
-	Name     *string `json:"name,omitempty"`
-	ParentId *string `json:"parentId"`
+// GetHighlightsParams defines parameters for GetHighlights.
+type GetHighlightsParams struct {
+	Limit  *float32 `form:"limit,omitempty" json:"limit,omitempty"`
+	Cursor *Cursor  `form:"cursor,omitempty" json:"cursor,omitempty"`
 }
+
+// PostHighlightsJSONBody defines parameters for PostHighlights.
+type PostHighlightsJSONBody struct {
+	BookmarkId  string                       `json:"bookmarkId"`
+	Color       *PostHighlightsJSONBodyColor `json:"color,omitempty"`
+	EndOffset   float32                      `json:"endOffset"`
+	Note        *string                      `json:"note"`
+	StartOffset float32                      `json:"startOffset"`
+	Text        *string                      `json:"text"`
+}
+
+// PostHighlightsJSONBodyColor defines parameters for PostHighlights.
+type PostHighlightsJSONBodyColor string
+
+// PatchHighlightsHighlightIdJSONBody defines parameters for PatchHighlightsHighlightId.
+type PatchHighlightsHighlightIdJSONBody struct {
+	Color *PatchHighlightsHighlightIdJSONBodyColor `json:"color,omitempty"`
+}
+
+// PatchHighlightsHighlightIdJSONBodyColor defines parameters for PatchHighlightsHighlightId.
+type PatchHighlightsHighlightIdJSONBodyColor string
 
 // PostListsJSONBody defines parameters for PostLists.
 type PostListsJSONBody struct {
-	Icon     string  `json:"icon"`
-	Name     string  `json:"name"`
+	Icon     string                 `json:"icon"`
+	Name     string                 `json:"name"`
+	ParentId *string                `json:"parentId"`
+	Query    *string                `json:"query,omitempty"`
+	Type     *PostListsJSONBodyType `json:"type,omitempty"`
+}
+
+// PostListsJSONBodyType defines parameters for PostLists.
+type PostListsJSONBodyType string
+
+// PatchListsListIdJSONBody defines parameters for PatchListsListId.
+type PatchListsListIdJSONBody struct {
+	Icon     *string `json:"icon,omitempty"`
+	Name     *string `json:"name,omitempty"`
 	ParentId *string `json:"parentId"`
+	Query    *string `json:"query,omitempty"`
 }
 
 // GetListsListIdBookmarksParams defines parameters for GetListsListIdBookmarks.
@@ -324,17 +457,29 @@ type PostBookmarksJSONRequestBody PostBookmarksJSONBody
 // PatchBookmarksBookmarkIdJSONRequestBody defines body for PatchBookmarksBookmarkId for application/json ContentType.
 type PatchBookmarksBookmarkIdJSONRequestBody PatchBookmarksBookmarkIdJSONBody
 
+// PostBookmarksBookmarkIdAssetsJSONRequestBody defines body for PostBookmarksBookmarkIdAssets for application/json ContentType.
+type PostBookmarksBookmarkIdAssetsJSONRequestBody PostBookmarksBookmarkIdAssetsJSONBody
+
+// PutBookmarksBookmarkIdAssetsAssetIdJSONRequestBody defines body for PutBookmarksBookmarkIdAssetsAssetId for application/json ContentType.
+type PutBookmarksBookmarkIdAssetsAssetIdJSONRequestBody PutBookmarksBookmarkIdAssetsAssetIdJSONBody
+
 // DeleteBookmarksBookmarkIdTagsJSONRequestBody defines body for DeleteBookmarksBookmarkIdTags for application/json ContentType.
 type DeleteBookmarksBookmarkIdTagsJSONRequestBody DeleteBookmarksBookmarkIdTagsJSONBody
 
 // PostBookmarksBookmarkIdTagsJSONRequestBody defines body for PostBookmarksBookmarkIdTags for application/json ContentType.
 type PostBookmarksBookmarkIdTagsJSONRequestBody PostBookmarksBookmarkIdTagsJSONBody
 
-// PatchListListIdJSONRequestBody defines body for PatchListListId for application/json ContentType.
-type PatchListListIdJSONRequestBody PatchListListIdJSONBody
+// PostHighlightsJSONRequestBody defines body for PostHighlights for application/json ContentType.
+type PostHighlightsJSONRequestBody PostHighlightsJSONBody
+
+// PatchHighlightsHighlightIdJSONRequestBody defines body for PatchHighlightsHighlightId for application/json ContentType.
+type PatchHighlightsHighlightIdJSONRequestBody PatchHighlightsHighlightIdJSONBody
 
 // PostListsJSONRequestBody defines body for PostLists for application/json ContentType.
 type PostListsJSONRequestBody PostListsJSONBody
+
+// PatchListsListIdJSONRequestBody defines body for PatchListsListId for application/json ContentType.
+type PatchListsListIdJSONRequestBody PatchListsListIdJSONBody
 
 // PatchTagsTagIdJSONRequestBody defines body for PatchTagsTagId for application/json ContentType.
 type PatchTagsTagIdJSONRequestBody PatchTagsTagIdJSONBody
