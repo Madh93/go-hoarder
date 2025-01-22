@@ -18,7 +18,13 @@ jobs:
         run: echo "CURRENT_VERSION=$(grep 'HOARDER_VERSION:' Taskfile.yml | cut -d ' ' -f4)" >> $GITHUB_ENV
 
       - name: Get latest release version
-        run: echo "LATEST_VERSION=$(curl -s https://api.github.com/repos/hoarder-app/hoarder/releases/latest | jq -r .tag_name)" >> $GITHUB_ENV
+        run: |
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/hoarder-app/hoarder/releases/latest | jq -r .tag_name)
+          if [[ "$LATEST_VERSION" == "null" ]]; then
+            echo "LATEST_VERSION=${{ env.CURRENT_VERSION }}" >> $GITHUB_ENV
+          else
+            echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+          fi
 
       - name: Check if there is a new release
         run: |
