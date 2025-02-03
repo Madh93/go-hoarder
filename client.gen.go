@@ -2336,6 +2336,7 @@ type PatchBookmarksBookmarkIdResponse struct {
 		CreatedAt     string                                    `json:"createdAt"`
 		Favourited    bool                                      `json:"favourited"`
 		Id            string                                    `json:"id"`
+		ModifiedAt    *string                                   `json:"modifiedAt"`
 		Note          *string                                   `json:"note"`
 		Summary       *string                                   `json:"summary"`
 		TaggingStatus *PatchBookmarksBookmarkId200TaggingStatus `json:"taggingStatus"`
@@ -3394,6 +3395,7 @@ func ParsePatchBookmarksBookmarkIdResponse(rsp *http.Response) (*PatchBookmarksB
 			CreatedAt     string                                    `json:"createdAt"`
 			Favourited    bool                                      `json:"favourited"`
 			Id            string                                    `json:"id"`
+			ModifiedAt    *string                                   `json:"modifiedAt"`
 			Note          *string                                   `json:"note"`
 			Summary       *string                                   `json:"summary"`
 			TaggingStatus *PatchBookmarksBookmarkId200TaggingStatus `json:"taggingStatus"`

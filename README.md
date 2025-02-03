@@ -8,7 +8,7 @@
 [Go](https://go.dev/) client library for [Hoarder](https://hoarder.app).
 
 The `go-hoarder` client is auto-generated using the
-[`oapi-codegen`](https://github.com/oapi-codegen/oapi-codegen) tool, which allows convert [Hoarder OpenAPI](https://github.com/hoarder-app/hoarder/blob/v0.21.0/packages/open-api/hoarder-openapi-spec.json) specification to Go code.
+[`oapi-codegen`](https://github.com/oapi-codegen/oapi-codegen) tool, which allows convert [Hoarder OpenAPI](https://github.com/hoarder-app/hoarder/blob/v0.22.0/packages/open-api/hoarder-openapi-spec.json) specification to Go code.
 
 ## Requirements
 
