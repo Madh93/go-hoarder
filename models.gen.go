@@ -15,6 +15,7 @@ const (
 
 // Defines values for BookmarkAssetsAssetType.
 const (
+	BookmarkAssetsAssetTypeAssetScreenshot   BookmarkAssetsAssetType = "assetScreenshot"
 	BookmarkAssetsAssetTypeBannerImage       BookmarkAssetsAssetType = "bannerImage"
 	BookmarkAssetsAssetTypeBookmarkAsset     BookmarkAssetsAssetType = "bookmarkAsset"
 	BookmarkAssetsAssetTypeFullPageArchive   BookmarkAssetsAssetType = "fullPageArchive"
@@ -100,6 +101,7 @@ const (
 
 // Defines values for PostBookmarksBookmarkIdAssetsJSONBodyAssetType.
 const (
+	AssetScreenshot   PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "assetScreenshot"
 	BannerImage       PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "bannerImage"
 	BookmarkAsset     PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "bookmarkAsset"
 	FullPageArchive   PostBookmarksBookmarkIdAssetsJSONBodyAssetType = "fullPageArchive"
@@ -195,6 +197,7 @@ type BookmarkContent2 struct {
 	AssetId   string                    `json:"assetId"`
 	AssetType BookmarkContent2AssetType `json:"assetType"`
 	FileName  *string                   `json:"fileName"`
+	Size      *float32                  `json:"size"`
 	SourceUrl *string                   `json:"sourceUrl"`
 	Type      BookmarkContent2Type      `json:"type"`
 }
