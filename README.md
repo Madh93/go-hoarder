@@ -1,5 +1,8 @@
 # go-hoarder
 
+> ⚠️ **DEPRECATION NOTICE**  
+> Development of this library has continued at [Madh93/go-karakeep](https://github.com/Madh93/go-karakeep) following the renaming of Hoarder to [Karakeep](https://karakeep.app) as of [version 0.23.1](https://github.com/karakeep-app/karakeep/releases/tag/v0.23.1).  
+
 [![Go Version](https://img.shields.io/badge/Go-1.22%2B-blue)](https://go.dev/doc/install)
 [![Latest tag](https://img.shields.io/github/v/tag/Madh93/go-hoarder?label=go%20module)](https://github.com/Madh93/go-hoarder/tags)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Madh93/go-hoarder.svg)](https://pkg.go.dev/github.com/Madh93/go-hoarder)
